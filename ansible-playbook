@@ -1,0 +1,61 @@
+--- # my project for the ansible
+  - name: playbook1
+    hosts: hr
+    user: ankush
+    become: yes
+    connection: ssh
+    tasks:
+        - name: httpd
+          yum:
+            name: httpd
+            state: present
+
+        - name:
+          yum:
+            name: unzip
+            state: present
+
+  - name: playbook2
+    hosts: hr
+    user: ankush
+    become: yes
+    connection: ssh
+    tasks:
+        - name: httpd
+          service:
+             name: httpd
+             state: started
+
+  - name: playbook3
+    hosts: hr
+    user: ankush
+    become: yes
+    connection: ssh
+    tasks:
+        - name: download website templte
+          get_url:
+             url: https://www.free-css.com/assets/files/free-css-templates/download/page291/gamepad.zip
+             dest: /home/ankush/
+
+  - name: playbook4
+    hosts: hr
+    user: ankush
+    become: yes
+    connection: ssh
+    tasks:
+        - name: extract gamepad.zip into /var/lib/gamepad
+          ansible.builtin.unarchive:
+              src: gamepad.zip
+              dest: /var/www/html/
+              remote_src: yes
+
+  - name: playbook5
+    hosts: hr
+    user: ankush
+    become: yes
+    connection: ssh
+    tasks:
+       - copy:
+             src: /var/www/html/html/
+             dest: /var/www/html/
+             remote_src: yes
